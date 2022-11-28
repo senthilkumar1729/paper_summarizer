@@ -1,0 +1,5 @@
+nltk
+textract
+transformers
+fastapi
+uvicorn

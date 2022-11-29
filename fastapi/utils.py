@@ -2,15 +2,18 @@ import nltk
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import tempfile
 
-def get_model():
-    a_model = AutoModelForSeq2SeqLM.from_pretrained("farleyknight/arxiv-summarization-t5-base-2022-09-21")
+PATH = 'models/'
+def get_model(model_name):
+    model_path = PATH + model_name
+    a_model = AutoModelForSeq2SeqLM.from_pretrained(model_path,local_files_only = True)
     return a_model
 
 
 
 
-def get_tokenizer():
-    a_tokenizer = AutoTokenizer.from_pretrained("farleyknight/arxiv-summarization-t5-base-2022-09-21")
+def get_tokenizer(model_name):
+    model_path = PATH + model_name
+    a_tokenizer = AutoTokenizer.from_pretrained(model_path,local_files_only = True)
     return a_tokenizer
 
 
@@ -43,23 +46,23 @@ def create_chunks(text:str, tokenizer:object)->list:
     count = -1
     for sentence in sentences:
         count += 1
-        combined_length = len(tokenizer.tokenize(sentence)) + length # add the no. of sentence tokens to the length counter
+        combined_length = len(tokenizer.tokenize(sentence)) + length
 
-        if combined_length  < tokenizer.max_len_single_sentence: # if it doesn't exceed
-            chunk += sentence + " " # add the sentence to the chunk
-            length = combined_length # update the length counter
+        if combined_length  < tokenizer.max_len_single_sentence: 
+            chunk += sentence + " " 
+            length = combined_length 
 
-            # if it is the last sentence
+          
             if count == len(sentences) - 1:
-                chunks.append(chunk) # save the chunk
+                chunks.append(chunk) 
             
         else: 
-            chunks.append(chunk) # save the chunk
+            chunks.append(chunk)
         # reset 
             length = 0 
             chunk = ""
 
-            # take care of the overflow sentence
+            
             chunk += sentence + " "
             length = len(tokenizer.tokenize(sentence))
         

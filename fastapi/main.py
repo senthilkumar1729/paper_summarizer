@@ -2,29 +2,41 @@
 import uuid
 import uvicorn
 from fastapi import File
-from fastapi import FastAPI
+from fastapi import FastAPI, UploadFile
 from fastapi import UploadFile
 import textract
 import tempfile
+import io
+import PyPDF2
 from utils import get_model, get_tokenizer, create_chunks
+
+
+
 
 app = FastAPI()
 
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome from the API"}
+    return {"message": "fastapi test"}
 
 
 @app.post("/summarize")
-def get_image(model_name:str = 'farleyknight/arxiv-summarization-t5-base-2022-09-21', uploaded_file: UploadFile = File(...)):
+def get_image(model_name:str = 'arxiv-summarization-t5-base-2022-09-21', uploaded_file: UploadFile = File(default=None)):
     text = ''
+    print("Made it iN WOOHOO")
+    print(uploaded_file.file)
+    xd = uploaded_file.file
+    #pdf = PyPDF2.PdfFileReader(io.BytesIO(xd.read()))
+    print("Did ti work?")
+    #print(pdf)
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp:
-        temp.write(file)
+        temp.write(xd.read())
         temp.flush()
         context = textract.process(temp.name)
         text = context.decode("UTF-8")
 
+    print("Model calls...")
     model = get_model(model_name)
     tokenizer = get_tokenizer(model_name)
 
@@ -36,7 +48,7 @@ def get_image(model_name:str = 'farleyknight/arxiv-summarization-t5-base-2022-09
     for input in inputs:
         output = model.generate(**input)
         summarized_text += str(tokenizer.decode(*output, skip_special_tokens=True))+'. '
-
+    print(type(summarized_text))
     return {"name": summarized_text}
 
 

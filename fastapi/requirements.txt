@@ -3,3 +3,6 @@ textract
 transformers
 fastapi
 uvicorn
+python-multipart
+PyPDF2
+numpy

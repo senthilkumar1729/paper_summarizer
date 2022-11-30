@@ -14,4 +14,8 @@ services:
     ports:
       - 8080:8080
     volumes:
+<<<<<<< HEAD
       - ./storage:/storage
+=======
+      - ./storage:/storage
+>>>>>>> ad146b3834ba97844672690f52824ec83db39b86

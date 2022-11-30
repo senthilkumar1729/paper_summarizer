@@ -2,18 +2,18 @@ import nltk
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import tempfile
 
-PATH = 'models/'
+#PATH = 'models/'
 def get_model(model_name):
-    model_path = PATH + model_name
-    a_model = AutoModelForSeq2SeqLM.from_pretrained(model_path,local_files_only = True)
+    model_path = model_name
+    a_model = AutoModelForSeq2SeqLM.from_pretrained(model_path)
     return a_model
 
 
 
 
 def get_tokenizer(model_name):
-    model_path = PATH + model_name
-    a_tokenizer = AutoTokenizer.from_pretrained(model_path,local_files_only = True)
+    model_path = model_name
+    a_tokenizer = AutoTokenizer.from_pretrained(model_path)
     return a_tokenizer
 
 

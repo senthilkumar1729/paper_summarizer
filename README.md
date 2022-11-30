@@ -26,4 +26,6 @@ Try upoloading a research paper as a pdf for paper summarization or try pasting 
 
 ![alt text](https://github.com/senthilkumar1729/paper_summarizer/blob/main/img/news.png)
 
+t5 model needs a bit more finetuning...
 
+![alt text](https://github.com/senthilkumar1729/paper_summarizer/blob/main/img/arxiv.png)
